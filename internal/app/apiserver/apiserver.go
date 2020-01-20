@@ -56,16 +56,6 @@ func (s *APIServer) configureRouter() {
 	s.router.HandleFunc("/hello", s.handelHello())
 }
 
-func (s *APIServer) handelHello() http.HandlerFunc {
-	type request struct {
-		name string
-	}
-
-	return func(w http.ResponseWriter, request *http.Request) {
-		io.WriteString(w, "Hello")
-	}
-}
-
 func (s *APIServer) configureStore() error {
 	st := store.New(s.config.Store)
 	if err := st.Open(); err != nil {
@@ -74,4 +64,14 @@ func (s *APIServer) configureStore() error {
 	s.store = st
 	return nil
 
+}
+
+func (s *APIServer) handelHello() http.HandlerFunc {
+	type request struct {
+		name string
+	}
+
+	return func(w http.ResponseWriter, request *http.Request) {
+		io.WriteString(w, "Hello")
+	}
 }
